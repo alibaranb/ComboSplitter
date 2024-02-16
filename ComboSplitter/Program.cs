@@ -14,18 +14,22 @@ using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, Buff
     while ((line = streamReader.ReadLine()) != null)
     {
         String[] splitted = line.Split(":");
-        if (r.IsMatch(splitted[0]))
+        if (line.Contains(' ') || splitted[1].Length > 64)
         {
-            emailPass.Add(line);
+            continue;
         }
         else
         {
-            if (line.Contains(' ') || splitted[1].Length > 64)
+            if (r.IsMatch(splitted[0]))
             {
-                continue;
+                emailPass.Add(line);
             }
-            userPass.Add(line);
+            else
+            {
+                userPass.Add(line);
+            }
         }
+        
     }
     File.WriteAllLines("user_pass.txt", userPass);
     File.WriteAllLines("email_pass.txt", emailPass);
