@@ -26,10 +26,12 @@ using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, Buff
             }
             else
             {
+                if (line.Contains("UNKNOWN"))
+                    continue;
                 userPass.Add(line);
             }
         }
-        
+
     }
     File.WriteAllLines("user_pass.txt", userPass);
     File.WriteAllLines("email_pass.txt", emailPass);
